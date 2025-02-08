@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "selenium-webdriver": "^4.28.1"
+  },
+  "devDependencies": {
+    "@types/chai": "^5.0.1",
+    "@types/selenium-webdriver": "^4.1.28",
+    "chai": "^5.1.2",
+    "typescript": "^5.7.3"
+  },
+  "scripts": {
+    "watch": "tsc -w"
+  },
+  "type": "module"
+}

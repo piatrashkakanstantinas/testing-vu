@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "module": "node16",
+    "outDir": "esm",
+    "strict": true,
+    "target": "es6"
+  },
+  "include": ["test"]
+}
