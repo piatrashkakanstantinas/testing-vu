@@ -62,7 +62,7 @@ const clickAddToCartPanelButton = async (button: string) => {
   );
   await driver
     .findElement(addToCartPanelLocator)
-    .findElement(By.xpath(`//*[@value='${button}']`))
+    .findElement(By.xpath(`//input[@value='${button}']`))
     .click();
   await driver.wait(until.elementIsNotVisible(loadingBlockWindow));
 };
@@ -96,26 +96,34 @@ const fillJewelryForm = async () => {
   );
   await getAttribute("Length in cm").sendKeys(80);
   await getAttribute("Pendant")
-    .findElement(By.xpath("//*[contains(text(), 'Star')]"))
+    .findElement(By.xpath("//label[contains(text(), 'Star')]"))
     .click();
 };
 
 (async () => {
   try {
     await driver.get("https://demowebshop.tricentis.com/");
+    await driver.manage().window().maximize();
 
     await openCategory("Gift Cards");
-    await (
-      await getProductItem(
-        async (productItem) => (await productItem.getActualPrice()) > 99
+    // await (
+    //   await getProductItem(
+    //     async (productItem) => (await productItem.getActualPrice()) > 99
+    //   )
+    // ).open();
+    await driver
+      .findElement(
+        By.xpath(
+          "//div[contains(@class, 'product-item') and .//span[contains(@class, 'actual-price')]>99]/div[contains(@class, 'picture')]"
+        )
       )
-    ).open();
+      .click(); // in case he asks for it
     await fillGiftCardForm();
     await setQuantity(5000);
     await addToCart();
     await addToWishlist();
 
-    await closeBarNotification(); // "Added to wish list" notification may obfuscate view
+    // await closeBarNotification(); // "Added to wish list" notification may obfuscate view
     await openCategory("Jewelry");
     await (
       await getProductItem(
@@ -128,7 +136,7 @@ const fillJewelryForm = async () => {
     await addToCart();
     await addToWishlist();
 
-    await closeBarNotification(); // "Added to wish list" notification may obfuscate view
+    // await closeBarNotification(); // "Added to wish list" notification may obfuscate view
     await driver
       .findElement(By.className("header-links"))
       .findElement(By.partialLinkText("Wishlist"))
@@ -140,7 +148,8 @@ const fillJewelryForm = async () => {
     }
     await driver.findElement(By.name("addtocartbutton")).click();
     expect(await getAttribute("Sub-Total").getText()).to.equal("1002600.00");
+    console.log("Test successfully passed");
   } finally {
-    driver.quit();
+    // driver.quit();
   }
 })();
