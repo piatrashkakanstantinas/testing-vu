@@ -1,5 +1,6 @@
 import { expect } from "chai";
 import { Browser, Builder, By, until, WebDriver } from "selenium-webdriver";
+import { v4 as uuidv4 } from "uuid";
 
 // const URL = "https://demoqa.com/";
 const URL = "https://web.archive.org/web/20250112093337/http://demoqa.com/";
@@ -58,23 +59,39 @@ describe("Task 2", () => {
         await driver.findElement(By.xpath("//button[text()='Add']")).click();
         await driver
           .findElement(By.xpath("//input[@placeholder='First Name']"))
-          .sendKeys("test");
+          .sendKeys(`test ${uuidv4()}`);
         await driver
           .findElement(By.xpath("//input[@placeholder='Last Name']"))
-          .sendKeys("test");
+          .sendKeys(`test ${uuidv4()}`);
         await driver
           .findElement(By.xpath("//input[@placeholder='name@example.com']"))
-          .sendKeys("test@test.test");
+          .sendKeys(`${uuidv4()}@test.test`);
         await driver
           .findElement(By.xpath("//input[@placeholder='Age']"))
-          .sendKeys(0);
+          .sendKeys(Math.floor(Math.random() * 50));
         await driver
           .findElement(By.xpath("//input[@placeholder='Salary']"))
-          .sendKeys(0);
+          .sendKeys(Math.floor(Math.random() * 1000));
         await driver
           .findElement(By.xpath("//input[@placeholder='Department']"))
-          .sendKeys("test");
+          .sendKeys(`test ${uuidv4()}`);
         await driver.findElement(By.xpath("//button[text()='Submit']")).click();
+
+        // await driver.sleep(200);
+
+        // await driver.wait(
+        //   until.(
+        //     driver.findElement(By.xpath("//button[not(@disabled) and text()='Next']"))
+        //   )
+        // );
+        const nextBtn = await driver.findElement(
+          By.xpath("//button[text()='Next']")
+        );
+
+        const attribute = await nextBtn.getAttribute("disabled");
+        console.log(attribute);
+
+        return attribute == null;
 
         const totalPages = await driver
           .findElement(By.className("-totalPages"))
@@ -83,7 +100,7 @@ describe("Task 2", () => {
       },
       undefined,
       undefined,
-      200
+      100
     );
     const nextButton = driver.findElement(By.xpath("//button[text()='Next']"));
     await driver.executeScript("arguments[0].scrollIntoView()", nextButton);

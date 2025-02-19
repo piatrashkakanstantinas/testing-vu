@@ -1,7 +1,8 @@
 {
   "type": "module",
   "dependencies": {
-    "selenium-webdriver": "^4.28.1"
+    "selenium-webdriver": "^4.28.1",
+    "uuid": "^11.0.5"
   },
   "devDependencies": {
     "@types/chai": "^5.0.1",
