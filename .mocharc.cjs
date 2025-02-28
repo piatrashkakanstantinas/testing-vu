@@ -3,4 +3,5 @@ module.exports = {
   //   require: "ts-node/register",
   timeout: 30000,
   "node-option": ["import=tsx"],
+  recursive: true,
 };
