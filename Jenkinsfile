@@ -22,18 +22,14 @@ pipeline {
 
         stage('Run tests') {
             steps {
-                try {
-                    sh 'npm test -- --reporter mocha-junit-reporter --reporter-options mochaFile=${MOCHA_REPORT_FILE}'
-                } catch (Exception e) {
-                    currentBuild.result = 'UNSTABLE'
-                }
+                sh 'npm test -- --reporter mocha-junit-reporter --reporter-options mochaFile=${MOCHA_REPORT_FILE}'
             }
         }
+    }
 
-        stage('Publish test results') {
-            always {
-                junit '${MOCHA_REPORT_FILE}'
-            }
+    post {
+        always {
+            junit '${MOCHA_REPORT_FILE}'
         }
     }
 }
