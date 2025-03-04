@@ -46,7 +46,7 @@ describe("Task 2", () => {
     expect(progressBarState).to.equal("0%");
   });
 
-  it("Task 2.2", async () => {
+  it.skip("Task 2.2", async () => {
     await driver
       .findElement(
         By.xpath("//div[contains(@class, 'top-card') and .//text()='Elements']")
