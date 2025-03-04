@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker 'node:22-alpine'
+        dockerfile true
     }
 
     environment {
@@ -8,12 +8,6 @@ pipeline {
     }
 
     stages {
-        stage('Install chromedriver') {
-            steps {
-                sh 'apk add chromium-chromedriver'
-            }
-        }
-
         stage('Checkout') {
             steps {
                 checkout scm
