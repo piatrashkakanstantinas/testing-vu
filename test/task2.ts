@@ -15,7 +15,7 @@ describe("Task 2", () => {
   }).timeout(60000);
 
   afterEach(async () => {
-    // await driver.quit();
+    await driver.quit();
   });
 
   it("Task 2.1", async () => {

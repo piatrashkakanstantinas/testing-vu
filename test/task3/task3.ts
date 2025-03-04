@@ -53,7 +53,7 @@ describe("task3", () => {
   });
 
   after(async () => {
-    // await driver.quit();
+    await driver.quit();
   });
 
   [1, 2].forEach((i) => {
