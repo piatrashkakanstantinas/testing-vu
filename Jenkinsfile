@@ -22,6 +22,7 @@ pipeline {
 
         stage('Run tests') {
             steps {
+                sh 'npm test'
                 sh 'npm test -- --reporter mocha-junit-reporter --reporter-options mochaFile=${MOCHA_REPORT_FILE}'
             }
         }
