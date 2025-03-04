@@ -1,17 +1,17 @@
-import { Browser, Builder, By, until, WebDriver } from "selenium-webdriver";
+import { By, until, WebDriver } from "selenium-webdriver";
 import { Select } from "selenium-webdriver/lib/select.js";
 import { v4 as uuidv4 } from "uuid";
 import fs from "fs/promises";
 import path from "path";
 import { expect } from "chai";
+import { buildDriver } from "../../utils.js";
 
 const URL = "https://demowebshop.tricentis.com/";
 const LOG_IN_LOCATOR = By.linkText("Log in");
 
 describe("task3", () => {
   const globalBefore = async () => {
-    driver = new Builder().forBrowser(Browser.CHROME).build();
-    await driver.manage().window().maximize();
+    driver = await buildDriver();
     await driver.get(URL);
     await driver.findElement(LOG_IN_LOCATOR).click();
   };
