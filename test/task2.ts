@@ -19,6 +19,7 @@ describe("Task 2", () => {
   });
 
   it("Task 2.1", async () => {
+    throw new Error("bad");
     await driver
       .findElement(
         By.xpath("//div[contains(@class, 'top-card') and .//text()='Widgets']")
