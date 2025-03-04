@@ -8,6 +8,12 @@ pipeline {
     }
 
     stages {
+        stage('Install chromedriver') {
+            steps {
+                sh 'apk add chromium-chromedriver'
+            }
+        }
+
         stage('Checkout') {
             steps {
                 checkout scm
