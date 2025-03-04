@@ -29,8 +29,7 @@ pipeline {
 
     post {
         always {
-            sh 'less ${MOCHA_REPORT_FILE}'
-            junit '${MOCHA_REPORT_FILE}'
+            junit '**/test-results.xml'
         }
     }
 }
