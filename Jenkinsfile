@@ -3,6 +3,10 @@ pipeline {
         dockerfile true
     }
 
+    triggers {
+        cron(BRANCH_NAME == "main" ? "H/2 * * * *" : "")
+    }
+
     environment {
         MOCHA_REPORT_FILE = 'reports/test-results.xml'
     }
