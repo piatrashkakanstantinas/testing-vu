@@ -15,6 +15,10 @@ describe("task3", () => {
     await driver.get(URL);
     await driver.findElement(LOG_IN_LOCATOR).click();
   };
+  const closeDriver = async () => {
+    await driver?.quit();
+    driver = undefined!;
+  };
   let driver: WebDriver;
   let email: string;
   let password: string;
@@ -45,15 +49,19 @@ describe("task3", () => {
     await driver
       .wait(until.elementLocated(By.xpath("//input[@value='Continue']")))
       .click();
+    await closeDriver();
   });
 
   beforeEach(async () => {
-    await driver.quit();
     await globalBefore();
   });
 
+  afterEach(async () => {
+    await closeDriver();
+  });
+
   after(async () => {
-    await driver.quit();
+    await closeDriver();
   });
 
   [1, 2].forEach((i) => {
