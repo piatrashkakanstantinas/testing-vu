@@ -1,6 +1,7 @@
 import { expect } from "chai";
-import { Browser, Builder, By, until, WebDriver } from "selenium-webdriver";
+import { By, until, WebDriver } from "selenium-webdriver";
 import { v4 as uuidv4 } from "uuid";
+import { buildDriver } from "../utils.js";
 
 // const URL = "https://demoqa.com/";
 const URL = "https://web.archive.org/web/20250112093337/http://demoqa.com/";
@@ -9,13 +10,12 @@ describe("Task 2", () => {
   let driver: WebDriver;
 
   beforeEach(async () => {
-    driver = new Builder().forBrowser(Browser.CHROME).build();
-    await driver.manage().window().maximize();
+    driver = await buildDriver();
     await driver.get(URL);
   }).timeout(60000);
 
   afterEach(async () => {
-    // await driver.quit();
+    await driver.quit();
   });
 
   it("Task 2.1", async () => {
