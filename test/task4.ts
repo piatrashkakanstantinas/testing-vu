@@ -10,7 +10,7 @@ describe("task4", () => {
   });
 
   after(async () => {
-    // await driver.quit();
+    await driver.quit();
   });
 
   it("Should remove first item from compare list after adding 5", async () => {
@@ -46,8 +46,15 @@ describe("task4", () => {
         .findElement(By.xpath("//input[@value='Add to compare list']"))
         .click();
 
-      await driver.findElement(By.xpath("//h1[text()='Compare products']"));
-      await driver.findElement(By.xpath(`//table//a[text()='${book}']`));
+      const compareProductsHeader = await driver.findElement(
+        By.xpath("//h1[text()='Compare products']")
+      );
+      const productLinkInTable = await driver.findElement(
+        By.xpath(`//table//a[text()='${book}']`)
+      );
+
+      expect(await compareProductsHeader.isDisplayed()).to.be.true;
+      expect(await productLinkInTable.isDisplayed()).to.be.true;
     }
 
     const productNames = await Promise.all(
