@@ -25,6 +25,8 @@ describe("task4", () => {
       "Health Book",
     ];
 
+    const previousBooks = [];
+
     for (const book of books) {
       await driver
         .findElement(
@@ -34,6 +36,10 @@ describe("task4", () => {
         )
         .click();
 
+      expect(
+        await driver.findElement(By.className("page-title")).getText()
+      ).to.equal("Books");
+
       await driver
         .findElement(
           By.xpath(
@@ -41,6 +47,12 @@ describe("task4", () => {
           )
         )
         .click();
+
+      expect(
+        await driver
+          .findElement(By.xpath("//input[@value='Add to cart']"))
+          .isDisplayed()
+      ).to.be.true;
 
       await driver
         .findElement(By.xpath("//input[@value='Add to compare list']"))
@@ -55,15 +67,16 @@ describe("task4", () => {
 
       expect(await compareProductsHeader.isDisplayed()).to.be.true;
       expect(await productLinkInTable.isDisplayed()).to.be.true;
+
+      const productNames = await getProductNames(driver);
+      if (previousBooks.length + 1 !== books.length) {
+        expect(productNames).to.include.members(previousBooks);
+      }
+
+      previousBooks.push(book);
     }
 
-    const productNames = await Promise.all(
-      (
-        await driver.findElements(
-          By.xpath("//tr[contains(@class, 'product-name')]//a")
-        )
-      ).map((element) => element.getText())
-    );
+    const productNames = await getProductNames(driver);
 
     expect(productNames).to.have.length(4);
     expect(productNames).not.to.contain(books[0]);
@@ -72,3 +85,13 @@ describe("task4", () => {
     }
   });
 });
+
+async function getProductNames(driver: WebDriver) {
+  return await Promise.all(
+    (
+      await driver.findElements(
+        By.xpath("//tr[contains(@class, 'product-name')]//a")
+      )
+    ).map((element) => element.getText())
+  );
+}
